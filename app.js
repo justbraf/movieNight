@@ -1,6 +1,6 @@
 import { PORT } from "./config.js"
 import express from "express"
-import { countGenres, getLongMovies, getMovies, getOneMovie } from "./movies.js"
+import { countGenre, countGenres, getLongMovies, getMovies, getOneMovie } from "./movies.js"
 
 const app = express()
 
@@ -21,7 +21,12 @@ app.get("/movies/long", (req, res) => {
 })
 
 app.get("/movies/count/:genre", (req, res) => {
-    countGenres(res, req.params.genre)
+    countGenre(res, req.params.genre)
+})
+
+app.get("/movies/count/genres/:num", (req, res) => {
+    console.log(typeof req.params.num)
+    countGenres(res, Number(req.params.num))
 })
 
 app.get("/movies/find/:mID", (req, res) => {

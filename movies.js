@@ -42,12 +42,28 @@ let getOneMovie = (res, mId) => {
 }
 
 
-let countGenres = (res, gen) => {
+let countGenre = (res, gen) => {
     myCollection.find({ "genres": gen }).count()
         .then(resp => {
             resp = { "count": resp }
             console.log(resp)
             res.status(200).json(resp)
+        })
+}
+
+let countGenres = (res, num) => {
+    myCollection.find({}, { limit: num, sort: { title: -1 } }).toArray()
+        .then(resp => {
+            let genreList = []
+            resp.forEach(doc => {
+                if (doc.genres)
+                    genreList.push(...doc.genres)
+            })
+            let genreCount = {}
+            genreList.forEach(item => {
+                genreCount[item] = (genreCount[item] || 0) + 1;
+            })
+            res.status(200).send(genreCount)
         })
 }
 
@@ -58,4 +74,4 @@ let getLongMovies = (res) => {
         })
 }
 
-export { getMovies, getOneMovie, countGenres, getLongMovies }
+export { getMovies, getOneMovie, countGenre, countGenres, getLongMovies }

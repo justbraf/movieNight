@@ -2,9 +2,9 @@ import { myCollection } from "./mongo.js"
 import date from 'date-and-time'
 import { ObjectId } from 'mongodb'
 
-// List movies fifteen at a time
-let getMovies = (res) => {
-    myCollection.find({}, { limit: 15 }).project({ "title": 1, "plot": 1, "genres": 1, "cast": 1, "runtime": 1, "released": 1 }).toArray()
+// List movies fifteen at a time and skip the number of specified records
+let getMovies = (res, skp = 0) => {
+    myCollection.find({}, { limit: 15, skip: skp }).project({ "title": 1, "plot": 1, "genres": 1, "cast": 1, "runtime": 1, "released": 1 }).toArray()
         // myCollection.find({}, { limit: 15 }).toArray()
         .then(resp => {
             if (!resp)

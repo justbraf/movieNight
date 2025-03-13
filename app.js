@@ -16,6 +16,11 @@ app.get("/movies", (req, res) => {
     getMovies(res)
 })
 
+// skip movies by a set number
+app.get("/movies/:page", (req, res) => {
+    getMovies(res, Number(req.params.page))
+})
+
 app.get("/movies/long", (req, res) => {
     getLongMovies(res)
 })

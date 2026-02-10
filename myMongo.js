@@ -12,5 +12,6 @@ const client = new MongoClient(MDBURI, {
 
 const mflixDB = client.db("sample_mflix")
 const moviesCollection = mflixDB.collection("movies")
+const favCollection = mflixDB.collection("faves")
 
-export { moviesCollection }
+export { moviesCollection, favCollection }

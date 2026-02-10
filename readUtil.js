@@ -1,5 +1,5 @@
 import { format } from "date-and-time"
-import { moviesCollection } from "./myMongo.js"
+import { favCollection, moviesCollection } from "./myMongo.js"
 import { ObjectId } from "mongodb"
 
 const getMovies = (res, type, page = 0) => {
@@ -67,4 +67,16 @@ const getMovie = (res, movieID) => {
         })
 }
 
-export { getMovies, getMovie }
+// retrieve all the favourites
+const getFaves = (res) => {
+    favCollection
+        .find({})
+        .toArray()
+        .then(favDocs => {
+            if (!favDocs)
+                favDocs = { "error": "no data found" }
+            res.status(200).json(favDocs)
+        })
+}
+
+export { getMovies, getMovie, getFaves }
